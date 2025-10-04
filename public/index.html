@@ -1,111 +1,110 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Mapa interactivo con popup y botón</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Tzikin - ExoLab</title>
+    <!-- Fuente Poppins desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        /* Fondo gradiente negro a azul */
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom right, #000000, #0f2c91);
+            color: white;
+            position: relative;
+        }
 
-  <style>
-    html, body { height: 100%; margin: 0; }
-    #map { height: 100%; width: 100%; }
-    .popup-btn {
-      display: inline-block;
-      padding: .6rem 1rem;
-      border-radius: 8px;
-      border: none;
-      text-decoration: none;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .leaflet-interactive { cursor: pointer; }
-  </style>
+        /* Contenedor central */
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Botones */
+        .btn {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #a3f29b; /* verde claro */
+            color: #000;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background-color: #8ce87e;
+        }
+
+        /* Botón inferior izquierdo */
+        .info-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: #a3f29b;
+            color: #000;
+        }
+
+        /* Texto desplegable */
+        .info-text {
+            position: absolute;
+            bottom: 60px;
+            left: 20px;
+            background-color: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            max-width: 300px;
+        }
+    </style>
 </head>
 <body>
-  <div id="map"></div>
 
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<script>
-  const map = L.map('map').setView([14.6349, -90.5069], 13);
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; OpenStreetMap'
-  }).addTo(map);
-
-  const area = L.circle([14.6398, -90.5132], {
-    radius: 250,
-    fillColor: '#3388ff',
-    fillOpacity: 0.2,
-    color: '#3388ff',
-    weight: 2
-  }).addTo(map);
-
-  const popupHtml = `
-    <div>
-      <h3 style="margin:0 0 .5rem 0;">Zona seleccionada</h3>
-      <p style="margin:.25rem 0 .75rem 0;">Area interactiva para mostrar control.</p>
-      <a href="destino.html" class="popup-btn" role="button">Ir a otra página</a>
+    <div class="container">
+        <h1>The Tzikin</h1>
+        <button class="btn" id="startBtn">Comenzar</button>
     </div>
-  `;
-  area.bindPopup(popupHtml, { closeButton: true, autoClose: false });
 
-  let overPopup = false;
-  let closeTimer = null;
+    <button class="btn info-btn" id="infoBtn">¿Qué es ExoLab?</button>
+    <div class="info-text" id="infoText">
+        Proyecto The Tzikin del equipo ExoLab para el reto: "Through the Radar Looking Glass: Revealing Earth Processes with SAR".
+    </div>
 
-  // Abrir al pasar el mouse
-  area.on('mouseover', () => {
-    clearTimeout(closeTimer);
-    area.openPopup();
-  });
+    <script>
+        // Botón "Comenzar" - por ahora va a una página en blanco
+        document.getElementById('startBtn').addEventListener('click', function() {
+            window.location.href = "pagina2.html"; // crea este archivo luego
+        });
 
-  // Cuando el popup se abre, enganchamos sus listeners
-  area.on('popupopen', (e) => {
-    const container = e.popup.getElement();
-    if (!container) return;
+        // Botón "¿Qué es ExoLab?" - despliega texto
+        const infoBtn = document.getElementById('infoBtn');
+        const infoText = document.getElementById('infoText');
 
-    // Si el mouse entra al popup, marcamos que está "encima del popup"
-    container.addEventListener('mouseenter', () => {
-      overPopup = true;
-      clearTimeout(closeTimer);
-    });
-
-    // Si sale del popup, intentamos cerrar con un pequeño delay
-    container.addEventListener('mouseleave', () => {
-      overPopup = false;
-      programarCierre();
-    });
-  });
-
-  // Al salir del área, intentamos cerrar, pero damos tiempo a que el mouse entre al popup
-  area.on('mouseout', () => {
-    programarCierre();
-  });
-
-  function programarCierre() {
-    clearTimeout(closeTimer);
-    closeTimer = setTimeout(() => {
-      if (!overPopup) area.closePopup();
-    }, 180); // 180–250 ms suele sentirse bien
-  }
-
-  // Cerrar al hacer clic fuera
-  map.on('click', () => {
-    clearTimeout(closeTimer);
-    area.closePopup();
-  });
-
-  // Compatibilidad móvil: tocar para abrir y tocar fuera para cerrar
-  area.on('touchstart', (e) => {
-    e.originalEvent.preventDefault();
-    clearTimeout(closeTimer);
-    area.openPopup();
-  });
-</script>
+        infoBtn.addEventListener('click', function() {
+            if(infoText.style.display === "block") {
+                infoText.style.display = "none";
+            } else {
+                infoText.style.display = "block";
+            }
+        });
+    </script>
 
 </body>
 </html>
