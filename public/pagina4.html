@@ -39,14 +39,43 @@
             margin: 0 auto;
         }
 
+        /* Sección izquierda con scroll */
         .gallery-section {
             flex: 1;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .gallery-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .gallery-section::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .gallery-section::-webkit-scrollbar-thumb {
+            background: #a3f29b;
+            border-radius: 4px;
+        }
+
+        .gallery-section::-webkit-scrollbar-thumb:hover {
+            background: #8ce87e;
+        }
+
+        /* Primer carrusel - AHORA VISIBLE */
+        .first-gallery-section {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 40px;
         }
 
         .gallery-rectangle {
-            flex: 1;
+            height: 400px; /* Altura fija para que sea visible */
             background-color: rgba(0, 0, 0, 0.6);
             border-radius: 12px;
             overflow: hidden;
@@ -182,10 +211,10 @@
 
         /* Segundo carrusel con aspect ratio 1.85:1 */
         .second-gallery-section {
-            margin-top: 40px;
             flex: 0 0 auto;
             display: flex;
             flex-direction: column;
+            margin-bottom: 40px;
         }
 
         .second-gallery-rectangle {
@@ -297,10 +326,11 @@
 
         /* Botón de predicción al lado */
         .prediction-section {
-            margin-top: 40px;
+            flex: 0 0 auto;
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-top: 20px;
         }
 
         .next-page-btn {
@@ -348,7 +378,7 @@
             }
             
             .gallery-rectangle {
-                min-height: 300px;
+                height: 300px; /* Altura menor en móvil */
             }
             
             .text-box {
@@ -374,58 +404,74 @@
             }
             
             .prediction-section {
-                margin-top: 30px;
+                margin-top: 20px;
             }
             
             .second-gallery-rectangle {
                 padding-bottom: 54.05%; /* Mantener aspect ratio en móvil */
+            }
+
+            .gallery-section {
+                overflow-y: visible; /* No scroll en móvil */
+                padding-right: 0;
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- Header -->
     <div class="header">
         <h1>Data Analysis</h1>
     </div>
 
     <div class="main-container">
+        <!-- Sección izquierda con ambos carruseles y SCROLL -->
         <div class="gallery-section">
-            <div class="gallery-rectangle">
-                <div class="figure-text" id="figureText">
-                    Fig.1 – July 7th (before earthquake swarm) <br>Source: Earthdata, NASA
+            <!-- Primer carrusel - AHORA VISIBLE -->
+            <div class="first-gallery-section">
+                <div class="gallery-rectangle">
+                    <div class="figure-text" id="figureText">
+                        Fig.1 – July 7th (before earthquake swarm) <br>Source: Earthdata, NASA
+                    </div>
+                    
+                    <!-- Imágenes -->
+                    <img src="/epicentroApag3.jpeg" 
+                         alt="SAR Image A" 
+                         class="gallery-image active"
+                         data-id="1">
+                    <img src="/epicentroBpag3.jpeg" 
+                         alt="SAR Image B" 
+                         class="gallery-image"
+                         data-id="2">
+                    <img src="/epicentroCpag3.jpeg" 
+                         alt="SAR Image C" 
+                         class="gallery-image"
+                         data-id="3">
+                    
+                    <!-- Botón para imagen anterior -->
+                    <button class="nav-btn prev-image-btn" id="prevImageBtn" disabled>&lt;</button>
+                    
+                    <!-- Botón para siguiente imagen -->
+                    <button class="nav-btn next-image-btn" id="nextImageBtn">&gt;</button>
                 </div>
                 
-                <img src="/epicentroApag3.jpeg" 
-                     alt="SAR Image A" 
-                     class="gallery-image active"
-                     data-id="1">
-                <img src="/epicentroBpag3.jpeg" 
-                     alt="SAR Image B" 
-                     class="gallery-image"
-                     data-id="2">
-                <img src="/epicentroCpag3.jpeg" 
-                     alt="SAR Image C" 
-                     class="gallery-image"
-                     data-id="3">
-                
-                <button class="nav-btn prev-image-btn" id="prevImageBtn" disabled>&lt;</button>
-                
-                <button class="nav-btn next-image-btn" id="nextImageBtn">&gt;</button>
-            </div>
-            
-            <div class="image-indicators">
-                <div class="image-indicator active" data-id="1"></div>
-                <div class="image-indicator" data-id="2"></div>
-                <div class="image-indicator" data-id="3"></div>
+                <!-- Indicadores de imágenes -->
+                <div class="image-indicators">
+                    <div class="image-indicator active" data-id="1"></div>
+                    <div class="image-indicator" data-id="2"></div>
+                    <div class="image-indicator" data-id="3"></div>
+                </div>
             </div>
 
+            <!-- Segundo carrusel con 5 imágenes y aspect ratio 1.85:1 -->
             <div class="second-gallery-section">
                 <div class="second-gallery-rectangle">
                     <div class="second-figure-text" id="secondFigureText">
                         Fig.4 – Graph Analysis 1<br>Source: TzikinSAR Analysis
                     </div>
                     
+                    <!-- 5 imágenes del segundo carrusel -->
                     <img src="/grafica1pag4.jpeg" 
                          alt="Graph Analysis 1" 
                          class="second-gallery-image active"
@@ -447,11 +493,14 @@
                          class="second-gallery-image"
                          data-id="5">
                     
+                    <!-- Botón para imagen anterior -->
                     <button class="second-nav-btn second-prev-image-btn" id="secondPrevImageBtn" disabled>&lt;</button>
                     
+                    <!-- Botón para siguiente imagen -->
                     <button class="second-nav-btn second-next-image-btn" id="secondNextImageBtn">&gt;</button>
                 </div>
                 
+                <!-- 5 indicadores del segundo carrusel -->
                 <div class="second-image-indicators">
                     <div class="second-image-indicator active" data-id="1"></div>
                     <div class="second-image-indicator" data-id="2"></div>
@@ -461,6 +510,7 @@
                 </div>
             </div>
 
+            <!-- Botón de predicción al lado del segundo carrusel -->
             <div class="prediction-section">
                 <button class="next-page-btn" id="nextPageBtn">TzikinSAR's prediction</button>
             </div>
@@ -482,6 +532,7 @@
     <button class="back-btn" id="backBtn">← Back</button>
 
     <script>
+        // Textos para cada imagen del primer carrusel
         const textContents = {
             1: `
                 <p><strong>Analysis - Figure 1</strong></p>
@@ -503,12 +554,14 @@
             `
         };
 
+        // Textos de las figuras del primer carrusel
         const figureTexts = {
             1: "Fig.1 – July 7th (before earthquake swarm) <br>Source: Earthdata, NASA",
             2: "Fig.2 – July 8th (during earthquake swarm) <br>Source: Earthdata, NASA",
             3: "Fig.3 – July 16th (after earthquake swarm) <br>Source: Earthdata, NASA"
         };
 
+        // Textos de las figuras del segundo carrusel (5 imágenes)
         const secondFigureTexts = {
             1: "Fig.4 – Graph Analysis 1<br>Source: TzikinSAR Analysis",
             2: "Fig.5 – Graph Analysis 2<br>Source: TzikinSAR Analysis", 
@@ -568,6 +621,7 @@
             });
         });
 
+        // ========== SEGUNDO CARRUSEL (5 IMÁGENES) ==========
         const secondImages = document.querySelectorAll('.second-gallery-image');
         const secondIndicators = document.querySelectorAll('.second-image-indicator');
         const secondPrevImageBtn = document.getElementById('secondPrevImageBtn');
@@ -615,6 +669,7 @@
             });
         });
 
+        // ========== NAVEGACIÓN GENERAL ==========
         const nextPageBtn = document.getElementById('nextPageBtn');
         const backBtn = document.getElementById('backBtn');
 
@@ -637,6 +692,7 @@
                 showImage(prevIndex);
             }
             
+            // Segundo carrusel (con Ctrl)
             if (e.ctrlKey) {
                 if (e.key === 'ArrowRight' && currentSecondImageIndex < secondImages.length - 1) {
                     const nextIndex = currentSecondImageIndex + 1;
