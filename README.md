@@ -1,3 +1,5 @@
-# Mi App Web en Azure con Python
+# TzikinSAR by the ExoLab team
 
-Aplicación web con backend en Flask y frontend en HTML, lista para desplegarse en Azure App Service.
+The ancient Maya understood the cosmos through the symbol of Tz'ikin (or Tzikin), a powerful Nahual representing the bird, the majestic messenger that soars between the heavens and the Earth, carrying messages of fortune, freedom, and far-reaching vision. This reverence for the avian seer and connector inspired our ExoLab team's TzikinSAR project, developed for the NASA Space Apps Challenge 2025. Following the intense earthquake swarm that began on July 8th, with an epicenter in Sacatepéquez, Guatemala, we focused our attention on this highly seismic region, utilizing the penetrating eye of SAR (Synthetic Aperture Radar) satellite imagery. We see science not merely as data collection, but as a key to deeply understanding our own community; just as the legendary Tz'ikin could see secrets hidden from the ground, our analysis of different SAR frequencies will allow us to compare ground deformation and uncover the Earth's hidden stories in this complex region, turning raw data into an essential tool for resilience and knowledge for those who live beneath the volcanoes
+
+Link to our project: https://exolab.wiki/
