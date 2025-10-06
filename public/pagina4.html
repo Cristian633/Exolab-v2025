@@ -180,6 +180,129 @@
             text-align: justify;
         }
 
+        /* Segundo carrusel con aspect ratio 1.85:1 */
+        .second-gallery-section {
+            margin-top: 40px;
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .second-gallery-rectangle {
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            /* Aspect ratio 1.85:1 */
+            width: 100%;
+            height: 0;
+            padding-bottom: 54.05%; /* 1 / 1.85 * 100% */
+        }
+
+        .second-gallery-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .second-gallery-image.active {
+            display: block;
+        }
+
+        .second-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background-color: #a3f29b;
+            color: #000;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s, background-color 0.2s, opacity 0.2s;
+            z-index: 10;
+        }
+
+        .second-nav-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            background-color: #8ce87e;
+        }
+
+        .second-nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: translateY(-50%) scale(1);
+        }
+
+        .second-nav-btn:disabled:hover {
+            transform: translateY(-50%) scale(1);
+            background-color: #a3f29b;
+        }
+
+        .second-prev-image-btn {
+            left: 20px;
+        }
+
+        .second-next-image-btn {
+            right: 20px;
+        }
+
+        .second-image-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .second-image-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #666;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .second-image-indicator.active {
+            background-color: #a3f29b;
+            transform: scale(1.2);
+        }
+
+        .second-image-indicator:hover {
+            transform: scale(1.3);
+        }
+
+        .second-figure-text {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 5;
+        }
+
+        /* Botón de predicción al lado */
+        .prediction-section {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .next-page-btn {
             padding: 1rem 2rem;
             font-size: 1.2rem;
@@ -190,6 +313,7 @@
             color: #000;
             transition: transform 0.2s, background-color 0.2s;
             width: 100%;
+            max-width: 300px;
         }
 
         .next-page-btn:hover {
@@ -235,25 +359,32 @@
                 font-size: 2rem;
             }
             
-            .nav-btn {
+            .nav-btn, .second-nav-btn {
                 width: 40px;
                 height: 40px;
                 font-size: 1.2rem;
             }
             
-            .prev-image-btn {
+            .prev-image-btn, .second-prev-image-btn {
                 left: 10px;
             }
             
-            .next-image-btn {
+            .next-image-btn, .second-next-image-btn {
                 right: 10px;
+            }
+            
+            .prediction-section {
+                margin-top: 30px;
+            }
+            
+            .second-gallery-rectangle {
+                padding-bottom: 54.05%; /* Mantener aspect ratio en móvil */
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <div class="header">
         <h1>Data Analysis</h1>
     </div>
@@ -262,10 +393,9 @@
         <div class="gallery-section">
             <div class="gallery-rectangle">
                 <div class="figure-text" id="figureText">
-                    Fig.1 – 7 de junio, ubicación<br>Source: NASA
+                    Fig.1 – July 7th (before earthquake swarm) <br>Source: Earthdata, NASA
                 </div>
                 
-                <!-- Imágenes -->
                 <img src="/epicentroApag3.jpeg" 
                      alt="SAR Image A" 
                      class="gallery-image active"
@@ -279,18 +409,60 @@
                      class="gallery-image"
                      data-id="3">
                 
-                <!-- Botón para imagen anterior -->
                 <button class="nav-btn prev-image-btn" id="prevImageBtn" disabled>&lt;</button>
                 
-                <!-- Botón para siguiente imagen -->
                 <button class="nav-btn next-image-btn" id="nextImageBtn">&gt;</button>
             </div>
             
-            <!-- Indicadores de imágenes -->
             <div class="image-indicators">
                 <div class="image-indicator active" data-id="1"></div>
                 <div class="image-indicator" data-id="2"></div>
                 <div class="image-indicator" data-id="3"></div>
+            </div>
+
+            <div class="second-gallery-section">
+                <div class="second-gallery-rectangle">
+                    <div class="second-figure-text" id="secondFigureText">
+                        Fig.4 – Graph Analysis 1<br>Source: TzikinSAR Analysis
+                    </div>
+                    
+                    <img src="/grafica1pag4.jpeg" 
+                         alt="Graph Analysis 1" 
+                         class="second-gallery-image active"
+                         data-id="1">
+                    <img src="/grafica2pag4.jpeg" 
+                         alt="Graph Analysis 2" 
+                         class="second-gallery-image"
+                         data-id="2">
+                    <img src="/grafica3pag4.jpeg" 
+                         alt="Graph Analysis 3" 
+                         class="second-gallery-image"
+                         data-id="3">
+                    <img src="/grafica4pag4.jpeg" 
+                         alt="Graph Analysis 4" 
+                         class="second-gallery-image"
+                         data-id="4">
+                    <img src="/grafica5pag4.jpeg" 
+                         alt="Graph Analysis 5" 
+                         class="second-gallery-image"
+                         data-id="5">
+                    
+                    <button class="second-nav-btn second-prev-image-btn" id="secondPrevImageBtn" disabled>&lt;</button>
+                    
+                    <button class="second-nav-btn second-next-image-btn" id="secondNextImageBtn">&gt;</button>
+                </div>
+                
+                <div class="second-image-indicators">
+                    <div class="second-image-indicator active" data-id="1"></div>
+                    <div class="second-image-indicator" data-id="2"></div>
+                    <div class="second-image-indicator" data-id="3"></div>
+                    <div class="second-image-indicator" data-id="4"></div>
+                    <div class="second-image-indicator" data-id="5"></div>
+                </div>
+            </div>
+
+            <div class="prediction-section">
+                <button class="next-page-btn" id="nextPageBtn">TzikinSAR's prediction</button>
             </div>
         </div>
 
@@ -304,15 +476,12 @@
                 
                 <p>Advanced processing techniques allow us to detect subtle changes that might not be visible through conventional monitoring methods, providing early warning capabilities for local communities.</p>
             </div>
-            
-            <button class="next-page-btn" id="nextPageBtn">TzikinSAR's prediction</button>
         </div>
     </div>
 
     <button class="back-btn" id="backBtn">← Back</button>
 
     <script>
-        // Textos para cada imagen
         const textContents = {
             1: `
                 <p><strong>Analysis - Figure 1</strong></p>
@@ -323,7 +492,6 @@
                 <p>The strongest clusters of change occur on the southern to western flanks of the cone, along the main drainage paths. Northeastern sectors show comparatively fewer anomalies.</p>
                 
                 <p>The During vs. Before map shows the broadest extent of anomalies (both positive and negative). In the After vs. During map, much of that signal contracts, leaving smaller patches near channel heads and around the summit. That pattern suggests a short-lived disturbance (vibration-induced ravel/moisture) followed by partial stabilization.</p>
-
             `,
             3: `
                 <p><strong>Analysis - Figure 3</strong></p>
@@ -335,28 +503,32 @@
             `
         };
 
-        // Textos de las figuras
         const figureTexts = {
             1: "Fig.1 – July 7th (before earthquake swarm) <br>Source: Earthdata, NASA",
             2: "Fig.2 – July 8th (during earthquake swarm) <br>Source: Earthdata, NASA",
-            3: "Fig.3 – July 16th (after earquake swarm) <br>Source: Earthdata, NASA"
+            3: "Fig.3 – July 16th (after earthquake swarm) <br>Source: Earthdata, NASA"
         };
 
-        // Elementos del DOM
+        const secondFigureTexts = {
+            1: "Fig.4 – Graph Analysis 1<br>Source: TzikinSAR Analysis",
+            2: "Fig.5 – Graph Analysis 2<br>Source: TzikinSAR Analysis", 
+            3: "Fig.6 – Graph Analysis 3<br>Source: TzikinSAR Analysis",
+            4: "Fig.7 – Graph Analysis 4<br>Source: TzikinSAR Analysis",
+            5: "Fig.8 – Graph Analysis 5<br>Source: TzikinSAR Analysis"
+        };
+
+        // ========== PRIMER CARRUSEL ==========
         const images = document.querySelectorAll('.gallery-image');
         const indicators = document.querySelectorAll('.image-indicator');
         const prevImageBtn = document.getElementById('prevImageBtn');
         const nextImageBtn = document.getElementById('nextImageBtn');
         const dynamicText = document.getElementById('dynamicText');
         const figureText = document.getElementById('figureText');
-        const nextPageBtn = document.getElementById('nextPageBtn');
-        const backBtn = document.getElementById('backBtn');
 
         let currentImageIndex = 0;
 
         function updateNavButtons() {
             prevImageBtn.disabled = currentImageIndex === 0;
-            
             nextImageBtn.disabled = currentImageIndex === images.length - 1;
         }
 
@@ -396,6 +568,56 @@
             });
         });
 
+        const secondImages = document.querySelectorAll('.second-gallery-image');
+        const secondIndicators = document.querySelectorAll('.second-image-indicator');
+        const secondPrevImageBtn = document.getElementById('secondPrevImageBtn');
+        const secondNextImageBtn = document.getElementById('secondNextImageBtn');
+        const secondFigureText = document.getElementById('secondFigureText');
+
+        let currentSecondImageIndex = 0;
+
+        function updateSecondNavButtons() {
+            secondPrevImageBtn.disabled = currentSecondImageIndex === 0;
+            secondNextImageBtn.disabled = currentSecondImageIndex === secondImages.length - 1;
+        }
+
+        function showSecondImage(index) {
+            secondImages.forEach(img => img.classList.remove('active'));
+            secondImages[index].classList.add('active');
+            
+            secondIndicators.forEach(indicator => indicator.classList.remove('active'));
+            secondIndicators[index].classList.add('active');
+            
+            secondFigureText.innerHTML = secondFigureTexts[index + 1];
+            
+            currentSecondImageIndex = index;
+            
+            updateSecondNavButtons();
+        }
+
+        secondPrevImageBtn.addEventListener('click', function() {
+            if (currentSecondImageIndex > 0) {
+                const prevIndex = currentSecondImageIndex - 1;
+                showSecondImage(prevIndex);
+            }
+        });
+
+        secondNextImageBtn.addEventListener('click', function() {
+            if (currentSecondImageIndex < secondImages.length - 1) {
+                const nextIndex = currentSecondImageIndex + 1;
+                showSecondImage(nextIndex);
+            }
+        });
+
+        secondIndicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', function() {
+                showSecondImage(index);
+            });
+        });
+
+        const nextPageBtn = document.getElementById('nextPageBtn');
+        const backBtn = document.getElementById('backBtn');
+
         nextPageBtn.addEventListener('click', function() {
             window.location.href = "pagina5.html";
         });
@@ -404,7 +626,9 @@
             window.location.href = "pagina3.html";
         });
 
+        // Navegación con teclado para ambos carruseles
         document.addEventListener('keydown', function(e) {
+            // Primer carrusel
             if (e.key === 'ArrowRight' && currentImageIndex < images.length - 1) {
                 const nextIndex = currentImageIndex + 1;
                 showImage(nextIndex);
@@ -412,15 +636,21 @@
                 const prevIndex = currentImageIndex - 1;
                 showImage(prevIndex);
             }
+            
+            if (e.ctrlKey) {
+                if (e.key === 'ArrowRight' && currentSecondImageIndex < secondImages.length - 1) {
+                    const nextIndex = currentSecondImageIndex + 1;
+                    showSecondImage(nextIndex);
+                } else if (e.key === 'ArrowLeft' && currentSecondImageIndex > 0) {
+                    const prevIndex = currentSecondImageIndex - 1;
+                    showSecondImage(prevIndex);
+                }
+            }
         });
 
         updateNavButtons();
+        updateSecondNavButtons();
     </script>
 
 </body>
 </html>
-
-
-
-
-
