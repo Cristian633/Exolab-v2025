@@ -529,15 +529,15 @@
     <div class="main-container">
         <div class="gallery-section">
             <div class="gallery-container">
-                <img src="file:/epicentroApag3.jpeg" 
+                <img src="/epicentroApag3.jpeg" 
                      alt="SAR Image A" 
                      class="gallery-image active"
                      data-id="1">
-                <img src="file:/durante2dafrecuencia.jpeg" 
+                <img src="/durante2dafrecuencia.jpeg" 
                      alt="SAR Image B" 
                      class="gallery-image inactive"
                      data-id="2">
-                <img src="file:/despues3rafrecuencia.jpeg" 
+                <img src="/despues3rafrecuencia.jpeg" 
                      alt="SAR Image C" 
                      class="gallery-image inactive"
                      data-id="3">
@@ -674,7 +674,6 @@
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
                 
-                // Convert line breaks to HTML
                 const formattedMessage = message.replace(/\n/g, '<br>');
                 messageDiv.innerHTML = formattedMessage;
                 
@@ -808,4 +807,5 @@
 
 </body>
 </html>
+
 
