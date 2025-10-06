@@ -1,0 +1,39 @@
+name: Deploy Flask app to Azure Web App - exolab2025
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'   # <<< usa 3.11, NO 3.13
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_562FBD0021064A878DD6C8EAAF27062C }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_30768807FF6E480DA879832AE36750ED }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_297CA6D1307A463AA64F861427A60F5A }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: exolab2025      # nombre exacto de tu App Service
+          slot-name: production
+          package: .
