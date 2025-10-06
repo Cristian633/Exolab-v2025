@@ -315,36 +315,31 @@
         // Textos para cada imagen
         const textContents = {
             1: `
-                <p><strong>Scientific Analysis - Image 1</strong></p>
-                <p>This SAR image from June 7th shows the initial seismic activity patterns in the Sacatepéquez region. The data reveals ground deformation and vegetation changes that are crucial for understanding the geological dynamics of the area.</p>
-                
-                <p>The analysis combines satellite observations with field data to provide comprehensive insights into the seismic behavior and potential risks associated with the fault lines in this region.</p>
-                
-                <p>Advanced processing techniques allow us to detect subtle changes that might not be visible through conventional monitoring methods, providing early warning capabilities for local communities.</p>
+                <p><strong>Analysis - Figure 1</strong></p>
+                <p>Most changes form slender streaks radiating downslope from the crater along established channels and gullies. That geometry is consistent with slope processes (small rockfalls, raveling, re-mobilization of loose material, or moisture changes in channels), not a straight fault rupture.</p>
             `,
             2: `
-                <p><strong>Scientific Analysis - Image 2</strong></p>
-                <p>Image 2, captured on June 14th, demonstrates significant ground movement patterns. The SAR data indicates deformation rates that exceed normal geological activity levels, suggesting increased seismic risk.</p>
+                <p><strong>Analysis - Figure 2</strong></p>
+                <p>The strongest clusters of change occur on the southern to western flanks of the cone, along the main drainage paths. Northeastern sectors show comparatively fewer anomalies.</p>
                 
-                <p>Comparative analysis with previous images shows progressive changes in the terrain, particularly in areas adjacent to known fault lines. These findings are essential for updating risk assessment models.</p>
-                
-                <p>The integration of multiple data sources provides a more accurate picture of the geological stresses building up in the region.</p>
+                <p>The During vs. Before map shows the broadest extent of anomalies (both positive and negative). In the After vs. During map, much of that signal contracts, leaving smaller patches near channel heads and around the summit. That pattern suggests a short-lived disturbance (vibration-induced ravel/moisture) followed by partial stabilization.</p>
+
             `,
             3: `
-                <p><strong>Scientific Analysis - Image 3</strong></p>
-                <p>The third image, from June 21st, reveals the culmination of seismic activity observed during this monitoring period. The data shows clear patterns of ground displacement and structural changes.</p>
+                <p><strong>Analysis - Figure 3</strong></p>
+                <p>No evidence of a throughgoing surface rupture. We do not see a long, continuous, linear band of change that would indicate a clear surface-breaking fault trace within the area of interest. The signal is distributed and topography-controlled.</p>
                 
-                <p>This comprehensive dataset allows for detailed modeling of earthquake propagation and potential impact zones, supporting disaster preparedness efforts in vulnerable communities.</p>
+                <p>How to Read the colors: +dB (orange/red): more radar energy returned. Typical causes in this context are increased surface roughness (fresh rock fragments exposed on channel floors and levees) or short-term wetting of soils/ash that boosts C-band VV return.</p>
                 
-                <p>The continuous monitoring capability of SAR technology provides invaluable data for long-term geological studies and risk mitigation strategies.</p>
+                <p>−dB (blue): less radar energy returned. Possible causes include fine material smoothing a surface, light vegetation knock-down, or localized drying.</p>
             `
         };
 
         // Textos de las figuras
         const figureTexts = {
-            1: "Fig.1 – 7 de junio, ubicación<br>Source: NASA",
-            2: "Fig.2 – 14 de junio, deformación<br>Source: NASA",
-            3: "Fig.3 – 21 de junio, actividad<br>Source: NASA"
+            1: "Fig.1 – July 7th (before earthquake swarm), ubicación<br>Source: Earthdata, NASA",
+            2: "Fig.2 – July 8th (during earthquake swarm), deformación<br>Source: Earthdata, NASA",
+            3: "Fig.3 – July 16th (after earquake swarm), actividad<br>Source: Earthdata, NASA"
         };
 
         // Elementos del DOM
@@ -424,6 +419,7 @@
 
 </body>
 </html>
+
 
 
 
